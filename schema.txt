@@ -15,3 +15,11 @@ slot
 	slot_no = 0..capacity
 	user = None
 
+CREATE TABLE parkings (
+id varchar,
+name varchar,
+address varchar,
+lat float,
+lon float,
+capacity int,
+PRIMARY KEY (id));
