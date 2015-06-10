@@ -23,3 +23,15 @@ lat float,
 lon float,
 capacity int,
 PRIMARY KEY (id));
+
+CREATE TABLE users (
+username varchar,
+parking varchar,
+slot_no int,
+PRIMARY KEY (username));
+
+CREATE TABLE slots (
+parking_id varchar,
+slot_no int,
+user varchar,
+PRIMARY KEY ( parking_id, slot_no));
