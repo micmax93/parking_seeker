@@ -1,0 +1,17 @@
+parking
+	id = uuid.uuid1()
+	name = ...
+	address = ...
+	geo = generated
+	capacity = ...
+
+user
+	username = ...
+	parking
+	slot_no
+
+slot
+	parking_id = fkey(id)
+	slot_no = 0..capacity
+	user = None
+
