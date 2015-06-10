@@ -15,5 +15,5 @@ print(conn.execute("select * from users"))
 # conn.execute("INSERT INTO users (username) VALUES ('Adolfik');")
 # conn.execute("INSERT INTO parkings (id, name, address, lat, lon, capacity) VALUES ('007','parking1','dluga 5',52.45,16.85,69);")
 # conn.execute("INSERT INTO slots (parking_id, slot_no, user) VALUES ('007',21,'Adolfik');")
-
-print(conn.execute("select * from users"))
+import json
+print(json.dumps(conn.execute("select * from slots"), indent=2))
