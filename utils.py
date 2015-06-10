@@ -21,11 +21,20 @@ def get_gps(address):
     return location
 
 
+def get_adr(gps):
+    geolocator = Nominatim()
+    try:
+        location = geolocator.reverse(gps)
+    except:
+        return None
+    return location.address
+
+
 def get_distance(beg, end):
     return vincenty(beg, end).km
 
 
 def rand_location():
-    lon = random.randrange(1680, 1694)/100.0
-    lat = random.randrange(5238, 5263)/100.0
+    lon = random.randrange(16800, 16940)/1000.0
+    lat = random.randrange(52380, 52630)/1000.0
     return lat, lon
