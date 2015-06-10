@@ -18,6 +18,6 @@ conn = utils.cass_connect()
 insert_parking = conn.prepare('INSERT INTO parkings (id, name, address, lat, lon, capacity) VALUES (?, ?, ?, ?, ?, ?)')
 conn.execute(insert_parking.bind([p_id, name, address, gps.latitude, gps.longitude, capacity]))
 
-insert_slot = conn.prepare('INSERT INTO slots (parking_id, slot_no) VALUES (?, ?)')
+insert_slot = conn.prepare('INSERT INTO slots (parking_id, slot_no,user) VALUES (?, ?,"NULL")')
 for x in range(0,capacity):
     conn.execute(insert_slot.bind([p_id, x]))
