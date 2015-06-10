@@ -29,3 +29,9 @@ if my_slot is None:
 conn.execute(take_slot.bind([my_slot.parking_id, int(my_slot.slot_no), user]))
 conn.execute("INSERT INTO users (username, parking, slot_no) VALUES ('%s', '%s', %s)" % (user, my_slot.parking_id, my_slot.slot_no))
 
+slotsDup = conn.prepare("SELECT count * FROM users WHERE slot_no=?")
+count = conn.execute(slotsDup.bind(my_slot))
+print (count) #kurwa chuj wi czemu "no free slots" jest. Wyjebalem nawet tabele slots!
+if count>1:
+    #nakurwiaj wegorza... znaczy sie lekkie transakcje
+    print("chcem nowe miejsce")
