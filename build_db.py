@@ -9,3 +9,11 @@ conn.execute('USE GPS')
 conn.execute('CREATE TABLE IF NOT EXISTS parkings (id varchar,name varchar,address varchar,lat float,lon float,capacity int,PRIMARY KEY (id))')
 conn.execute('CREATE TABLE IF NOT EXISTS users (username varchar,parking varchar,slot_no int,PRIMARY KEY (username))')
 conn.execute('CREATE TABLE IF NOT EXISTS slots (parking_id varchar,slot_no int,user varchar,PRIMARY KEY ( parking_id, slot_no))')
+
+print(conn.execute("select * from users"))
+
+# conn.execute("INSERT INTO users (username) VALUES ('Adolfik');")
+# conn.execute("INSERT INTO parkings (id, name, address, lat, lon, capacity) VALUES ('007','parking1','dluga 5',52.45,16.85,69);")
+# conn.execute("INSERT INTO slots (parking_id, slot_no, user) VALUES ('007',21,'Adolfik');")
+
+print(conn.execute("select * from users"))
