@@ -9,7 +9,11 @@ def cass_connect():
     conn = cluster.connect()
     conn.execute('USE GPS')
     return conn
-
+    # conn.execute('CREATE TABLE parkings (id varchar,name varchar,address varchar,lat float,lon float,capacity int,PRIMARY KEY (id));')
+    # conn.execute('CREATE TABLE users (username varchar,parking varchar,slot_no int,PRIMARY KEY (username));')
+    # conn.execute('CREATE TABLE slots (parking_id varchar,slot_no int,user varchar,PRIMARY KEY ( parking_id, slot_no));')
+    print conn.execute('DESCRIBE TABLES;')
+    print "chuj"
 
 def get_gps(address):
     geolocator = Nominatim()
