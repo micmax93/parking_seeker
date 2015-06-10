@@ -4,7 +4,7 @@ import sys
 
 user = 'Hans'
 location = utils.rand_location()
-print utils.get_adr(location)
+print(utils.get_adr(location))
 
 conn = utils.cass_connect()
 parkings = conn.execute('SELECT * FROM parkings')
@@ -18,7 +18,7 @@ for p in parkings:
     free_slots = conn.execute(find_slots.bind([str(p[0].id)]))
     if len(free_slots)>0:
         my_slot = free_slots[0]
-        print p[0].name, p[1], "km \t", p[0].address, '  slot=', my_slot.slot_no
+        print(p[0].name, p[1], "km \t", p[0].address, '  slot=', my_slot.slot_no)
 
 if my_slot is None:
     print('No free slots')
