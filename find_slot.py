@@ -8,7 +8,8 @@ import sys
 class Obj(object):
     pass
 
-user = 'Hans'
+
+user = sys.argv[1]
 location = utils.rand_location()
 print(utils.get_adr(location))
 
@@ -49,11 +50,25 @@ def take_slot(slot, safe=False):
     conn.execute(q_save_slot.bind((user, slot.parking_id, slot.slot_no)))
 
 
+def validate_slot(slot):
+    dups = conn.execute(q_find_dup.bind([slot.parking_id, slot.slot_no]))
+    if len(dups) == 1 and dups[0].username == user:
+        return True
+    # raw_input('to slow!...')
+    u = conn.execute(q_check_slot.bind([slot.parking_id, slot.slot_no]))[0].user
+    return u == user
+
+
 parkings = list_parkings(location)
-p, slot = find_slot(parkings)
-if slot is None:
-    print("No empty slots!")
-    exit()
-else:
-    print(p.name, p.distance, p.address, slot.slot_no)
-take_slot(slot, safe=True)
+safe = False
+while True:
+    p, slot = find_slot(parkings)
+    if slot is None:
+        print("No empty slots!")
+        break
+    # raw_input('should I?')
+    take_slot(slot, safe=safe)
+    if validate_slot(slot):
+        print(p.name, p.distance, "km\t", p.address, " \tslot=", slot.slot_no)
+        break
+    safe = True
