@@ -15,7 +15,7 @@ def cass_connect():
 def get_gps(address):
     geolocator = Nominatim()
     try:
-        location = geolocator.geocode(address)
+        location = geolocator.geocode(address, timeout=5)
     except:
         return None
     return location
@@ -24,7 +24,7 @@ def get_gps(address):
 def get_adr(gps):
     geolocator = Nominatim()
     try:
-        location = geolocator.reverse(gps)
+        location = geolocator.reverse(gps, timeout=5)
     except:
         return None
     return location.address

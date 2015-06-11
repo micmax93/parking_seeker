@@ -1,3 +1,5 @@
+from cassandra import ConsistencyLevel
+
 __author__ = 'se416237'
 import utils
 import sys
@@ -14,6 +16,7 @@ parkings = sorted(parkings, key=lambda x: x[1])
 find_slots = conn.prepare("SELECT * FROM slots WHERE parking_id=? AND user='' LIMIT 1")
 take_slot = conn.prepare("INSERT INTO slots (parking_id, slot_no, user) VALUES (?, ?, ?)")
 save_slot = conn.prepare("INSERT INTO users (username, parking, slot_no) VALUES (?, ?, ?)")
+#save_slot.consistency_level = ConsistencyLevel.QUORUM
 
 my_slot = None
 for p in parkings:
@@ -21,17 +24,19 @@ for p in parkings:
     if len(free_slots) > 0:
         my_slot = free_slots[0]
         print(p[0].name, p[1], "km \t", p[0].address, '  slot=', my_slot.slot_no)
+        break
 
 if my_slot is None:
     print('No free slots')
     exit()
 
 conn.execute(take_slot.bind([my_slot.parking_id, int(my_slot.slot_no), user]))
-conn.execute("INSERT INTO users (username, parking, slot_no) VALUES ('%s', '%s', %s)" % (user, my_slot.parking_id, my_slot.slot_no))
+conn.execute(save_slot.bind((user, my_slot.parking_id, my_slot.slot_no)))
+# conn.execute("INSERT INTO users (username, parking, slot_no) VALUES ('%s', '%s', %s)" % (user, my_slot.parking_id, my_slot.slot_no))
 
-slotsDup = conn.prepare("SELECT count * FROM users WHERE slot_no=?")
-count = conn.execute(slotsDup.bind(my_slot))
-print (count) #kurwa chuj wi czemu "no free slots" jest. Wyjebalem nawet tabele slots!
-if count>1:
-    #nakurwiaj wegorza... znaczy sie lekkie transakcje
+slotsDup = conn.prepare("SELECT username FROM users WHERE parking=? AND slot_no=? ALLOW FILTERING")
+
+count = conn.execute(slotsDup.bind([my_slot.parking_id, my_slot.slot_no]))
+print (count)
+if len(count)>1:
     print("chcem nowe miejsce")

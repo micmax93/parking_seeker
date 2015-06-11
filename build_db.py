@@ -10,6 +10,8 @@ conn.execute('CREATE TABLE IF NOT EXISTS parkings (id varchar,name varchar,addre
 conn.execute('CREATE TABLE IF NOT EXISTS users (username varchar,parking varchar,slot_no int,PRIMARY KEY (username))')
 conn.execute('CREATE TABLE IF NOT EXISTS slots (parking_id varchar,slot_no int,user varchar,PRIMARY KEY ( parking_id, slot_no))')
 conn.execute('create index IF NOT EXISTS slot_user on slots(user)')
+conn.execute('CREATE INDEX IF NOT EXISTS users_parkings on users(parking)')
+conn.execute('CREATE INDEX IF NOT EXISTS users_slots on users(slot_no)')
 
 
 print(conn.execute("select * from users"))
