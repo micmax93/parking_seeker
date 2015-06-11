@@ -3,7 +3,7 @@ from cassandra.cluster import Cluster
 
 cluster = Cluster(['micmax93.me'])
 conn = cluster.connect()
-conn.execute('DROP KEYSPACE GPS')
+conn.execute('DROP KEYSPACE IF EXISTS GPS')
 conn.execute("CREATE KEYSPACE IF NOT EXISTS GPS WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }")
 conn.execute('USE GPS')
 
