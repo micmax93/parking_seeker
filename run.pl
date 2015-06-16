@@ -1,16 +1,22 @@
 #!/usr/bin/perl
 
-$linie
-while($line = <>)
+print "aaa";
+$file = 'names.txt';
+open $info, $file or die "Could not open $file: $!";
+
+$linie=0;
+while($line = <$info>){
+        ++$linie;
+}
 {
+use integer
+$ile=$linie/10;
+}
+for($i = 0; $i < 10; $i++) {
 
-	$linie++;
-
+$start= $i*$ile+1;
+ $end= ($i+1)*$ile;
+        `perl worker.pl $start $end &`;
 }
 
-$ile=$linie/100
-for($i = 0; $i < 100; $i++) {
-	`perl worker.pl $i*$ile+1 ($i+1)*$ile &`;
-}
-
-	# `python find_plot.py $line &`;
+        # `python find_plot.py $line &`;
