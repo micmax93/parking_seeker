@@ -43,11 +43,12 @@ def find_slot(parkings):
 
 
 def take_slot(slot, safe=False):
+    conn.execute(q_save_slot.bind((user, slot.parking_id, slot.slot_no)))  #mialo byc odwrotnie ;)
     if not safe:
         conn.execute(q_take_slot.bind([slot.parking_id, int(slot.slot_no), user]))
     else:
         conn.execute(q_safe_take_slot.bind([user, slot.parking_id, int(slot.slot_no)]))
-    conn.execute(q_save_slot.bind((user, slot.parking_id, slot.slot_no)))
+   # conn.execute(q_save_slot.bind((user, slot.parking_id, slot.slot_no)))
 
 
 def validate_slot(slot):
